@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Calculadora</title>
+</head>
+
+<body>
+    <div class="principal glass-effect">
+
+        <h1 class="titulo">Conversor Numérico</h1>
+        <input class="default" type="text" id="input_num_inicial" placeholder="Digite um número">
+        <p class="p-bases"><b>Selecione as bases para conversão:</b></p>
+
+
+        <div class="select-bases">
+            <select id="select_inicial">
+                <option value=2>Binário</option>
+                <option value=10>Decimal</option>
+                <option value=8>Octal</option>
+                <option value=16>Hexadecimal</option>
+            </select>
+            <select id="select_final">
+                <option value=2>Binário</option>
+                <option value=10>Decimal</option>
+                <option value=8>Octal</option>
+                <option value=16>Hexadecimal</option>
+            </select>
+        </div>
+
+
+        <button class="default btn-calcular" onclick="converterBases()">
+            <strong>Calcular</strong>
+        </button>
+
+
+        <h1 class="titulo">Resultado</h1>
+        <p id="mostrar_resultado" class="resultado"><b>Clique em Calcular</b></p>
+
+
+        <p>Made by Lucas Aiello and Samara Damacena! 🩵</p>
+    </div>
+
+
+</body>
+
+</html>
+
+<script>
+    function converterBases() {
+        const numero = input_num_inicial.value
+
+        testbin = /^[01]+$/.test(numero)
+        testdec = /^[0-9]+$/.test(numero)
+        testoct = /^[0-7]+$/.test(numero)
+        testhex = /^[0-9A-Fa-f]+$/.test(numero)
+
+        mostrar_resultado.innerHTML = ''
+
+        const opcao_inicial = select_inicial.value
+
+        if (testbin == false && opcao_inicial == 2 ||
+            testdec == false && opcao_inicial == 10 ||
+            testoct == false && opcao_inicial == 8 ||
+            testhex == false && opcao_inicial == 16
+        ) {
+            mostrar_resultado.innerHTML = `
+            <p class="resultado erro">
+                <b>CUIDADO!</b>
+                O número que você inseriu não está de acordo com a base selecionada!
+            </p>
+            `
+        } else {
+            const opcao_final = select_final.value
+
+            if (opcao_inicial == opcao_final) {
+                mostrar_resultado.innerHTML = `${numero}`
+            } else {
+                // Transforma o texto que vem do Input para a base indicada inicialmente
+                const decimal = parseInt(numero, opcao_inicial)
+                // Transforma o número para a base selecionada
+                mostrar_resultado.innerHTML = `${decimal.toString(opcao_final)}`
+            }
+        }
+    }
+</script>
